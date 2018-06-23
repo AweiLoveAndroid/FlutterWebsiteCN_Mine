@@ -1,0 +1,2 @@
+# FlutterWebsiteCN_Mine
+模仿Flutter中文官网写的一个本地的html页面，同时将官网的一些未翻译的英文页面翻译成了中文。
