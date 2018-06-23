@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+
+<head>
+  <title>右侧默认页面</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <style type="text/css">
+    html {
+      height: 100%;
+      width: 100%;
+    }
+
+    #ul_title_style li {
+      padding-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="post-header">
+    <div>
+      <h1 class="post-title">Using Themes to share colors and font styles </h1>
+    </div>
+
+  </header>
+
+
+  <p>In order to share colors and font styles throughout our app, we can take advantage of themes. There are two ways to define
+    themes: App-wide or using
+    <code class="highlighter-rouge">Theme</code> Widgets that define the colors and font styles for a particular part of our application. In fact, app-wide themes are
+    just
+    <code class="highlighter-rouge">Theme</code> Widgets created at the root of our apps by the
+    <code class="highlighter-rouge">MaterialApp</code>!</p>
+
+  <p>After we define a Theme, we can use it within our own Widgets. In addition, the Material Widgets provided by Flutter will
+    use our Theme to set the background colors and font styles for AppBars, Buttons, Checkboxes, and more.</p>
+
+  <h2 id="creating-an-app-theme">Creating an app theme</h2>
+
+  <p>In order to share a Theme containing colors and font styles across our entire app, we can provide
+    <a href="https://docs.flutter.io/flutter/material/ThemeData-class.html">
+      <code class="highlighter-rouge">ThemeData</code>
+    </a>
+    to the
+    <code class="highlighter-rouge">MaterialApp</code> constructor.</p>
+
+  <p>If no
+    <code class="highlighter-rouge">theme</code> is provided, Flutter will create a fallback theme under the hood.</p>
+
+  <!-- skip -->
+  <div class="language-dart highlighter-rouge">
+    <pre class="highlight"><code><span class="n">MaterialApp</span><span class="o">(</span>
+  <span class="nl">title:</span> <span class="n">title</span><span class="o">,</span>
+  <span class="nl">theme:</span> <span class="n">ThemeData</span><span class="o">(</span>
+    <span class="nl">brightness:</span> <span class="n">Brightness</span><span class="o">.</span><span class="na">dark</span><span class="o">,</span>
+    <span class="nl">primaryColor:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">lightBlue</span><span class="o">[</span><span class="mi">800</span><span class="o">],</span>
+    <span class="nl">accentColor:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">cyan</span><span class="o">[</span><span class="mi">600</span><span class="o">],</span>
+  <span class="o">),</span>
+<span class="o">);</span>
+</code></pre>
+  </div>
+
+  <p>Please see the
+    <a href="https://docs.flutter.io/flutter/material/ThemeData-class.html">ThemeData</a>
+    documentation to see all of the colors and fonts you can define.</p>
+
+  <h2 id="themes-for-part-of-an-application">Themes for part of an application</h2>
+
+  <p>If we want to override the app-wide theme in part of our application, we can wrap a section of our app in a
+    <code class="highlighter-rouge">Theme</code> Widget.</p>
+
+  <p>There are two ways to approach this: creating unique
+    <code class="highlighter-rouge">ThemeData</code>, or extending the parent theme.</p>
+
+  <h3 id="creating-unique-themedata">Creating unique
+    <code class="highlighter-rouge">ThemeData</code>
+  </h3>
+
+  <p>If we don’t want to inherit any application colors or font styles, we can create a
+    <code class="highlighter-rouge">ThemeData()</code> instance and pass that to the
+    <code class="highlighter-rouge">Theme</code> Widget.</p>
+
+  <!-- skip -->
+  <div class="language-dart highlighter-rouge">
+    <pre class="highlight"><code><span class="n">Theme</span><span class="o">(</span>
+  <span class="c1">// Create a unique theme with "ThemeData"</span>
+  <span class="nl">data:</span> <span class="n">ThemeData</span><span class="o">(</span>
+    <span class="nl">accentColor:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">yellow</span><span class="o">,</span>
+  <span class="o">),</span>
+  <span class="nl">child:</span> <span class="n">FloatingActionButton</span><span class="o">(</span>
+    <span class="nl">onPressed:</span> <span class="o">()</span> <span class="o">{},</span>
+    <span class="nl">child:</span> <span class="n">Icon</span><span class="o">(</span><span class="n">Icons</span><span class="o">.</span><span class="na">add</span><span class="o">),</span>
+  <span class="o">),</span>
+<span class="o">);</span>
+</code></pre>
+  </div>
+
+  <h3 id="extending-the-parent-theme">Extending the parent theme</h3>
+
+  <p>Rather than overriding everything, it often makes sense to extend the parent theme. We can achieve this by using the
+    <a href="https://docs.flutter.io/flutter/material/ThemeData/copyWith.html">
+      <code class="highlighter-rouge">copyWith</code>
+    </a>
+    method.</p>
+
+  <!-- skip -->
+  <div class="language-dart highlighter-rouge">
+    <pre class="highlight"><code><span class="n">Theme</span><span class="o">(</span>
+  <span class="c1">// Find and Extend the parent theme using "copyWith". Please see the next </span>
+  <span class="c1">// section for more info on `Theme.of`.</span>
+  <span class="nl">data:</span> <span class="n">Theme</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">copyWith</span><span class="o">(</span><span class="nl">accentColor:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">yellow</span><span class="o">),</span>
+  <span class="nl">child:</span> <span class="n">FloatingActionButton</span><span class="o">(</span>
+    <span class="nl">onPressed:</span> <span class="kc">null</span><span class="o">,</span>
+    <span class="nl">child:</span> <span class="n">Icon</span><span class="o">(</span><span class="n">Icons</span><span class="o">.</span><span class="na">add</span><span class="o">),</span>
+  <span class="o">),</span>
+<span class="o">);</span>
+</code></pre>
+  </div>
+
+  <h2 id="using-a-theme">Using a Theme</h2>
+
+  <p>Now that we’ve defined a theme, we can use it within our Widget
+    <code class="highlighter-rouge">build</code> methods by using the
+    <code class="highlighter-rouge">Theme.of(context)</code> function!</p>
+
+  <p>
+    <code class="highlighter-rouge">Theme.of(context)</code> will look up the Widget tree and return the nearest
+    <code class="highlighter-rouge">Theme</code> in the tree. If we have a stand-alone
+    <code class="highlighter-rouge">Theme</code> defined above our Widget, it returns that. If not, it returns the App theme.</p>
+
+  <p>In fact, the
+    <code class="highlighter-rouge">FloatingActionButton</code> uses this exact technique to find the
+    <code class="highlighter-rouge">accentColor</code>!</p>
+
+  <!-- skip -->
+  <div class="language-dart highlighter-rouge">
+    <pre class="highlight"><code><span class="n">Container</span><span class="o">(</span>
+  <span class="nl">color:</span> <span class="n">Theme</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">accentColor</span><span class="o">,</span>
+  <span class="nl">child:</span> <span class="n">Text</span><span class="o">(</span>
+    <span class="s">'Text with a background color'</span><span class="o">,</span>
+    <span class="nl">style:</span> <span class="n">Theme</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">textTheme</span><span class="o">.</span><span class="na">title</span><span class="o">,</span>
+  <span class="o">),</span>
+<span class="o">);</span>
+</code></pre>
+  </div>
+
+  <h2 id="complete-example">Complete example</h2>
+
+  <div class="language-dart highlighter-rouge">
+    <pre class="highlight"><code><span class="kn">import</span> <span class="s">'package:flutter/foundation.dart'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'package:flutter/material.dart'</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">runApp</span><span class="o">(</span><span class="n">MyApp</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">MyApp</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="o">{</span>
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="o">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">appName</span> <span class="o">=</span> <span class="s">'Custom Themes'</span><span class="o">;</span>
+
+    <span class="k">return</span> <span class="n">MaterialApp</span><span class="o">(</span>
+      <span class="nl">title:</span> <span class="n">appName</span><span class="o">,</span>
+      <span class="nl">theme:</span> <span class="n">ThemeData</span><span class="o">(</span>
+        <span class="nl">brightness:</span> <span class="n">Brightness</span><span class="o">.</span><span class="na">dark</span><span class="o">,</span>
+        <span class="nl">primaryColor:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">lightBlue</span><span class="o">[</span><span class="mi">800</span><span class="o">],</span>
+        <span class="nl">accentColor:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">cyan</span><span class="o">[</span><span class="mi">600</span><span class="o">],</span>
+      <span class="o">),</span>
+      <span class="nl">home:</span> <span class="n">MyHomePage</span><span class="o">(</span>
+        <span class="nl">title:</span> <span class="n">appName</span><span class="o">,</span>
+      <span class="o">),</span>
+    <span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">MyHomePage</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="o">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">title</span><span class="o">;</span>
+
+  <span class="n">MyHomePage</span><span class="o">({</span><span class="n">Key</span> <span class="n">key</span><span class="o">,</span> <span class="nd">@required</span> <span class="k">this</span><span class="o">.</span><span class="na">title</span><span class="o">})</span> <span class="o">:</span> <span class="k">super</span><span class="o">(</span><span class="nl">key:</span> <span class="n">key</span><span class="o">);</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="o">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">Scaffold</span><span class="o">(</span>
+      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="o">(</span>
+        <span class="nl">title:</span> <span class="n">Text</span><span class="o">(</span><span class="n">title</span><span class="o">),</span>
+      <span class="o">),</span>
+      <span class="nl">body:</span> <span class="n">Center</span><span class="o">(</span>
+        <span class="nl">child:</span> <span class="n">Container</span><span class="o">(</span>
+          <span class="nl">color:</span> <span class="n">Theme</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">accentColor</span><span class="o">,</span>
+          <span class="nl">child:</span> <span class="n">Text</span><span class="o">(</span>
+            <span class="s">'Text with a background color'</span><span class="o">,</span>
+            <span class="nl">style:</span> <span class="n">Theme</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">textTheme</span><span class="o">.</span><span class="na">title</span><span class="o">,</span>
+          <span class="o">),</span>
+        <span class="o">),</span>
+      <span class="o">),</span>
+      <span class="nl">floatingActionButton:</span> <span class="n">Theme</span><span class="o">(</span>
+        <span class="nl">data:</span> <span class="n">Theme</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">copyWith</span><span class="o">(</span><span class="nl">accentColor:</span> <span class="n">Colors</span><span class="o">.</span><span class="na">yellow</span><span class="o">),</span>
+        <span class="nl">child:</span> <span class="n">FloatingActionButton</span><span class="o">(</span>
+          <span class="nl">onPressed:</span> <span class="kc">null</span><span class="o">,</span>
+          <span class="nl">child:</span> <span class="n">Icon</span><span class="o">(</span><span class="n">Icons</span><span class="o">.</span><span class="na">add</span><span class="o">),</span>
+        <span class="o">),</span>
+      <span class="o">),</span>
+    <span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+  </div>
+
+  <!-- 同级目录 demo5/cookbook/design/themes/themes.png -->
+  <!-- <p><img src="themes.png" alt="Themes Demo" /></p> -->
+  <!-- 上级目录 demo5/cookbook/design/themes.png-->
+  <!-- <p><img src="../themes.png" alt="Themes Demo" /></p> -->
+  <!-- 上上级目录 demo5/cookbook/themes.png -->
+  <!-- <p><img src="../../themes.png" alt="Themes Demo" /></p> -->
+  <!-- 跟目录 demo5/themes.png -->
+  <!-- <p><img src="../../../themes.png" alt="Themes Demo" /></p> -->
+  <!-- 跟目录下面的images/cookbook/themes.png -->
+  <p>
+    <img src="../../../images/cookbook/themes.png" alt="Themes Demo" />
+  </p>
+
+  </article>
+
+  </div>
+  </div>
+
+
+
+  </div>
+  <!-- /.row -->
+  </div>
+  <!-- /.container -->
+</body>
+
+</html>
