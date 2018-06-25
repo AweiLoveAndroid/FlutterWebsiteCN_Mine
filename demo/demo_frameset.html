@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+
+<head>
+    <title>frameset示例代码</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<frameset rows="80%,*">
+    <!--主轮廓（上下结构）  start1-->
+    <!--*************************************************************************-->
+    <frameset cols="18%,*">
+        <!--上面的大轮廓左右分 start2-->
+
+        <frame src="content1.html"></frame>
+        <frameset rows="18%,*">
+            <!--最小轮廓上下分 start3-->
+            <frame src="content2.html"></frame>
+            <frame src="content3.html"></frame>
+        </frameset>
+        <!--最小轮廓上下分 end3-->
+
+    </frameset>
+    <!--上面的大轮廓左右分 end2-->
+    <frame src="content3.html"></frame>
+    <!--*************************************************************************-->
+</frameset>
+<!--主轮廓（上下结构）  end1-->
+
+</html>
